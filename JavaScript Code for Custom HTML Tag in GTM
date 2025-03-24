@@ -1,0 +1,27 @@
+<script>
+(function() {
+    var cookieName = "fbclid"; // Set the cookie name dynamically 
+    var cookieValue = "{{URL - gclid}}"; // Set the cookie value dynamically 
+
+    if (!cookieName || !cookieValue) return; // Stop if cookieName or cookieValue is empty
+
+    // Function to check if the cookie already exists
+    function getCookie(name) {
+        var match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+        return match ? match[2] : null;
+    }
+
+    var existingCookie = getCookie(cookieName);
+
+    // Only set the cookie if it's not already present
+    if (!existingCookie) {
+        var expirationDays = 30; // Expiration time in days
+        var expirationMilliseconds = expirationDays * 24 * 60 * 60 * 1000;
+        var d = new Date();
+        d.setTime(d.getTime() + expirationMilliseconds);
+        var cookieExpireDate = d.toUTCString();
+
+        document.cookie = cookieName + "=" + encodeURIComponent(cookieValue) + "; expires=" + cookieExpireDate + "; path=/; domain=." + location.hostname.replace(/^www\./i, "");
+    }
+})();
+</script>
